@@ -3,84 +3,98 @@ import streamlit as st
 import pandas as pd
 from io import BytesIO
 
-st.set_page_config(page_title="Global BOM Comparator", layout="wide")
+st.set_page_config(page_title="BOM Comparator Tool", layout="wide")
 
 # ============================================================
 # Language selector with real flag images
 # ============================================================
 
-try:
-    query_lang = st.query_params.get("lang")
-    if query_lang in ["pt", "en", "cn"]:
-        st.session_state.lang = query_lang
-except Exception:
-    pass
-
-
 def render_language_selector(current_lang):
-    selected_pt = "selected" if current_lang == "pt" else ""
-    selected_en = "selected" if current_lang == "en" else ""
-    selected_cn = "selected" if current_lang == "cn" else ""
+    selected_pt = "selected-flag" if current_lang == "pt" else ""
+    selected_en = "selected-flag" if current_lang == "en" else ""
+    selected_cn = "selected-flag" if current_lang == "cn" else ""
 
-    html = f"""
+    st.markdown("""
 <style>
-.language-wrap {{
-    display: inline-block;
-    color: #f8fafc;
-    margin-bottom: 10px;
-}}
-.language-title {{
+.language-title {
     font-size: 14px;
     font-weight: 700;
     color: #e5e7eb;
     margin-bottom: 8px;
-}}
-.flags {{
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}}
-.flag-card {{
-    width: 72px;
-    height: 50px;
-    border-radius: 8px;
+}
+.flag-display-card {
+    width: 74px;
+    height: 52px;
+    border-radius: 9px;
     border: 1px solid #334155;
     background: rgba(15, 23, 42, 0.92);
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 6px;
     box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.08);
-    transition: 0.15s ease-in-out;
-    text-decoration: none;
-}}
-.flag-card:hover {{
-    border-color: #38bdf8;
-    box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
-    transform: translateY(-1px);
-}}
-.flag-card.selected {{
+}
+.flag-display-card.selected-flag {
     border: 2px solid #0ea5e9;
     box-shadow: 0 0 16px rgba(14, 165, 233, 0.58);
-}}
-.flag-svg {{
+}
+.flag-svg {
     width: 54px;
     height: 36px;
     border-radius: 2px;
     display: block;
-}}
+}
+.selected-lang {
+    border: 1px solid #0ea5e9;
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: #38bdf8;
+    display: inline-block;
+    margin-top: 4px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    background: rgba(14, 165, 233, 0.12);
+}
+div[data-testid="stHorizontalBlock"] button {
+    min-height: 34px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: rgba(15, 23, 42, 0.92);
+    color: #f8fafc;
+    font-size: 12px;
+    font-weight: 800;
+    transition: 0.15s ease-in-out;
+}
+div[data-testid="stHorizontalBlock"] button:hover {
+    border-color: #38bdf8;
+    box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
+    transform: translateY(-1px);
+}
 </style>
-<div class="language-wrap">
 <div class="language-title">🌐 Idioma / Language / 语言</div>
-<div class="flags">
-<a class="flag-card {selected_pt}" href="?lang=pt" target="_self" title="Português">
+""", unsafe_allow_html=True)
+
+    lang_cols = st.columns([0.55, 0.55, 0.55, 6])
+
+    with lang_cols[0]:
+        st.markdown(f"""
+<div class="flag-display-card {selected_pt}">
 <svg class="flag-svg" viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg">
 <rect width="90" height="60" fill="#009b3a"/>
 <path d="M45 6 L84 30 L45 54 L6 30 Z" fill="#ffdf00"/>
 <circle cx="45" cy="30" r="13" fill="#002776"/>
 <path d="M32 27 C40 24, 52 24, 59 31" stroke="#fff" stroke-width="3" fill="none"/>
 </svg>
-</a>
-<a class="flag-card {selected_en}" href="?lang=en" target="_self" title="English">
+</div>
+""", unsafe_allow_html=True)
+        if st.button("PT", key="lang_pt", help="Português", use_container_width=True):
+            st.session_state.lang = "pt"
+            st.rerun()
+
+    with lang_cols[1]:
+        st.markdown(f"""
+<div class="flag-display-card {selected_en}">
 <svg class="flag-svg" viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg">
 <rect width="90" height="60" fill="#b22234"/>
 <g fill="#fff">
@@ -100,8 +114,15 @@ def render_language_selector(current_lang):
 <circle cx="6" cy="25" r="1.3"/><circle cx="13" cy="25" r="1.3"/><circle cx="20" cy="25" r="1.3"/><circle cx="27" cy="25" r="1.3"/><circle cx="34" cy="25" r="1.3"/>
 </g>
 </svg>
-</a>
-<a class="flag-card {selected_cn}" href="?lang=cn" target="_self" title="中文">
+</div>
+""", unsafe_allow_html=True)
+        if st.button("EN", key="lang_en", help="English", use_container_width=True):
+            st.session_state.lang = "en"
+            st.rerun()
+
+    with lang_cols[2]:
+        st.markdown(f"""
+<div class="flag-display-card {selected_cn}">
 <svg class="flag-svg" viewBox="0 0 90 60" xmlns="http://www.w3.org/2000/svg">
 <rect width="90" height="60" fill="#de2910"/>
 <polygon points="18,8 20.9,16.5 30,16.5 22.6,21.8 25.5,30 18,24.9 10.5,30 13.4,21.8 6,16.5 15.1,16.5" fill="#ffde00"/>
@@ -110,12 +131,19 @@ def render_language_selector(current_lang):
 <polygon points="49,31 50.2,34.5 54,34.5 50.9,36.7 52.1,40.2 49,38.1 45.9,40.2 47.1,36.7 44,34.5 47.8,34.5" fill="#ffde00"/>
 <polygon points="37,42 38.2,45.5 42,45.5 38.9,47.7 40.1,51.2 37,49.1 33.9,51.2 35.1,47.7 32,45.5 35.8,45.5" fill="#ffde00"/>
 </svg>
-</a>
 </div>
-</div>
-"""
-    st.markdown(html, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
+        if st.button("CN", key="lang_cn", help="中文", use_container_width=True):
+            st.session_state.lang = "cn"
+            st.rerun()
 
+    label = {
+        "pt": "Português selecionado",
+        "en": "English selected",
+        "cn": "中文已选择"
+    }.get(current_lang, "English selected")
+
+    st.markdown(f'<div class="selected-lang">{label}</div>', unsafe_allow_html=True)
 
 
 
@@ -127,11 +155,11 @@ def render_language_selector(current_lang):
 TEXT = {
     "pt": {
         "language": "Idioma",
-        "app_title": "Comparador Global de BOM",
+        "app_title": "BOM Comparator Tool",
         "app_subtitle": "Compare arquivos BOM por Ref. e Part Number, incluindo PN divergente, itens faltantes, itens extras e duplicidades.",
-        "area": "Qualidade SMT & NPI",
-        "version": "Versão 1.4.8",
-        "tool_type": "Ferramenta Interna de Validação de BOM",
+        "area": "Quality Specialist",
+        "version": "Versão 1.5.16",
+        "tool_type": "Developed by Matheus Augusto de Lima Basilio",
         "how_to_use": "Como usar",
         "step1": "1. Carregue a Tabela 1 e a Tabela 2",
         "step2": "2. Verifique se as colunas selecionadas automaticamente estão corretas",
@@ -174,15 +202,28 @@ TEXT = {
         "download_excel": "📥 Baixar Relatório Excel",
         "processing_error": "Erro ao processar os arquivos",
         "upload_warning": "Carregue os dois arquivos para iniciar a comparação.",
-        "footer": "Comparador Global de BOM | Versão 1.4.8 | Qualidade SMT & NPI | Ref. + Part Number"
+        "footer": "BOM Comparator Tool | Version 1.5.16<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
+        "filters": "Filtros e Busca",
+        "result_filter": "Filtrar resultado",
+        "issue_filter": "Filtrar problemas por severidade",
+        "search": "Pesquisar Ref. ou Part Number",
+        "all": "Todos",
+        "all_issues": "Todas",
+        "no_result": "Nenhum resultado encontrado com os filtros aplicados.",
+        "issue_filters": "🚨 Filtros da Central de Problemas",
+        "comparison_filters": "🔍 Filtros da Comparação",
+        "issue_filter_note": "ℹ️ Este filtro afeta apenas a Central de Problemas.",
+        "comparison_filter_note": "ℹ️ Estes filtros afetam o Resultado da Comparação e a busca nas tabelas exibidas.",
+        "drag_drop": "📁 Arraste o arquivo aqui ou clique para selecionar",
+        "supported_files": "Formatos aceitos: XLSX, XLS e CSV"
     },
     "en": {
         "language": "Language",
-        "app_title": "Global BOM Comparator",
+        "app_title": "BOM Comparator Tool",
         "app_subtitle": "Compare BOM files by Ref. and Part Number, including PN mismatch, missing items, extra items and duplicates.",
-        "area": "SMT Quality & NPI",
-        "version": "Version 1.4.8",
-        "tool_type": "Internal BOM Validation Tool",
+        "area": "Quality Specialist",
+        "version": "Version 1.5.16",
+        "tool_type": "Developed by Matheus Augusto de Lima Basilio",
         "how_to_use": "How to Use",
         "step1": "1. Upload Table 1 and Table 2",
         "step2": "2. Check if the automatically selected columns are correct",
@@ -225,15 +266,28 @@ TEXT = {
         "download_excel": "📥 Download Excel Report",
         "processing_error": "Error processing files",
         "upload_warning": "Please upload both files to start the comparison.",
-        "footer": "Global BOM Comparator | Version 1.4.8 | SMT Quality & NPI | Ref. + Part Number"
+        "footer": "BOM Comparator Tool | Version 1.5.16<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
+        "filters": "Filters and Search",
+        "result_filter": "Filter result",
+        "issue_filter": "Filter issues by severity",
+        "search": "Search Ref. or Part Number",
+        "all": "All",
+        "all_issues": "All",
+        "no_result": "No results found with the applied filters.",
+        "issue_filters": "🚨 Issue Center Filters",
+        "comparison_filters": "🔍 Comparison Filters",
+        "issue_filter_note": "ℹ️ This filter affects only the Issue Center.",
+        "comparison_filter_note": "ℹ️ These filters affect the Comparison Result and search across displayed tables.",
+        "drag_drop": "📁 Drag and drop the file here or click to browse",
+        "supported_files": "Supported formats: XLSX, XLS and CSV"
     },
     "cn": {
         "language": "语言",
-        "app_title": "BOM表对比工具",
+        "app_title": "BOM Comparator Tool",
         "app_subtitle": "通过位号和料号对比BOM文件，包括料号不一致、缺失项目、多余项目和重复位号。",
-        "area": "SMT质量 & NPI",
-        "version": "版本 1.4.8",
-        "tool_type": "内部BOM验证工具",
+        "area": "Quality Specialist",
+        "version": "版本 1.5.16",
+        "tool_type": "Developed by Matheus Augusto de Lima Basilio",
         "how_to_use": "使用说明",
         "step1": "1. 上传表格1和表格2",
         "step2": "2. 检查系统自动选择的列是否正确",
@@ -276,7 +330,20 @@ TEXT = {
         "download_excel": "📥 下载Excel报告",
         "processing_error": "处理文件时发生错误",
         "upload_warning": "请上传两个文件以开始比较。",
-        "footer": "BOM表对比工具 | 版本 1.4.8 | SMT质量 & NPI | 位号 + 料号"
+        "footer": "BOM Comparator Tool | Version 1.5.16<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
+        "filters": "筛选和搜索",
+        "result_filter": "筛选结果",
+        "issue_filter": "按严重等级筛选问题",
+        "search": "搜索位号或料号",
+        "all": "全部",
+        "all_issues": "全部",
+        "no_result": "未找到符合筛选条件的结果。",
+        "issue_filters": "🚨 问题中心筛选",
+        "comparison_filters": "🔍 比较结果筛选",
+        "issue_filter_note": "ℹ️ 此筛选仅影响问题中心。",
+        "comparison_filter_note": "ℹ️ 这些筛选影响比较结果，并可在显示的表格中搜索。",
+        "drag_drop": "📁 将文件拖到这里或点击选择文件",
+        "supported_files": "支持格式：XLSX、XLS 和 CSV"
     }
 }
 
@@ -551,15 +618,27 @@ def traduzir_normalizada_df(df, lang):
         "料号 (Part Number)": TABLE_TEXT[lang]["pn"]
     })
 
+
+def aplicar_busca_resultado(df, termo):
+    if not termo:
+        return df
+
+    termo = str(termo).strip().lower()
+    if termo == "":
+        return df
+
+    cols = ["位号 (Ref.)", "PN_Tabela1", "PN_Tabela2", "Status"]
+    mask = False
+
+    for col in cols:
+        if col in df.columns:
+            mask = mask | df[col].astype(str).str.lower().str.contains(termo, na=False)
+
+    return df[mask]
+
+
 if "lang" not in st.session_state:
     st.session_state.lang = "en"
-
-try:
-    query_lang = st.query_params.get("lang")
-    if query_lang in ["pt", "en", "cn"]:
-        st.session_state.lang = query_lang
-except Exception:
-    pass
 
 # ----------------------------
 # Language selector with real flag cards
@@ -603,6 +682,42 @@ st.markdown("""
     color: #94a3b8;
     font-size: 13px;
 }
+.upload-card {
+    padding: 16px 16px 8px 16px;
+    border-radius: 12px 12px 0 0;
+    border: 1px dashed #38bdf8;
+    border-bottom: none;
+    background: rgba(15, 23, 42, 0.55);
+    margin-bottom: 0;
+}
+.upload-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin-bottom: 4px;
+}
+.upload-hint {
+    font-size: 13px;
+    color: #93c5fd;
+    margin-bottom: 2px;
+}
+.upload-format {
+    font-size: 12px;
+    color: #94a3b8;
+}
+div[data-testid="stFileUploader"] {
+    margin-top: 0 !important;
+}
+div[data-testid="stFileUploader"] section {
+    border-radius: 0 0 12px 12px !important;
+    border: 1px dashed #38bdf8 !important;
+    border-top: none !important;
+    background: rgba(31, 41, 55, 0.70) !important;
+    padding-top: 12px !important;
+}
+div[data-testid="stFileUploader"] label {
+    display: none !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -610,21 +725,91 @@ render_language_selector(st.session_state.lang)
 
 t = TEXT[st.session_state.lang]
 
+# ============================================================
+# Login Screen
+# ============================================================
+
+VALID_USER = "quality"
+VALID_PASSWORD = "jovi123"
+
+if "authenticated" not in st.session_state:
+    st.session_state.authenticated = False
+
+if not st.session_state.authenticated:
+    st.markdown("""
+    <style>
+    .login-container {
+        max-width: 430px;
+        margin: 70px auto 0 auto;
+        padding: 34px 34px 28px 34px;
+        border-radius: 18px;
+        border: 1px solid #334155;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(17, 24, 39, 0.96));
+        box-shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+    }
+    .login-title {
+        font-size: 30px;
+        font-weight: 850;
+        color: #f8fafc;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+    .login-subtitle {
+        font-size: 14px;
+        color: #93c5fd;
+        text-align: center;
+        margin-bottom: 24px;
+    }
+    .login-footer {
+        font-size: 12px;
+        color: #64748b;
+        text-align: center;
+        margin-top: 18px;
+    }
+    </style>
+    <div class="login-container">
+        <div class="login-title">BOM Comparator Tool</div>
+        <div class="login-subtitle">Restricted Access | Jovi Quality Department</div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    with st.form("login_form"):
+        username = st.text_input("Usuário / User")
+        password = st.text_input("Senha / Password", type="password")
+        login_clicked = st.form_submit_button("Entrar / Login", use_container_width=True)
+
+        if login_clicked:
+            if username == VALID_USER and password == VALID_PASSWORD:
+                st.session_state.authenticated = True
+                st.rerun()
+            else:
+                st.error("Usuário ou senha inválidos. / Invalid username or password.")
+
+    st.markdown("""
+    <div class="login-footer">
+        Developed by Matheus Augusto de Lima Basilio<br>
+        Quality Specialist | Jovi Quality Department
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.stop()
+
+# Logout control
+logout_col1, logout_col2 = st.columns([8, 1])
+with logout_col2:
+    if st.button("Logout", use_container_width=True):
+        st.session_state.authenticated = False
+        st.rerun()
+
+
 # ----------------------------
 # Header
 # ----------------------------
 st.markdown(f"""
 <div class="main-header">
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
-        <div>
-            <div class="main-title">{t["app_title"]}</div>
-            <div class="main-subtitle">{t["app_subtitle"]}</div>
-        </div>
-        <div style="text-align: right; min-width: 190px;">
-            <div style="font-size: 14px; color: #cbd5e1; font-weight: 700;">{t["area"]}</div>
-            <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">{t["version"]}</div>
-            <div style="font-size: 12px; color: #94a3b8; margin-top: 4px;">{t["tool_type"]}</div>
-        </div>
+    <div>
+        <div class="main-title">{t["app_title"]}</div>
+        <div class="main-subtitle">{t["app_subtitle"]}</div>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -648,28 +833,106 @@ st.subheader(t["upload_files"])
 col1, col2 = st.columns(2)
 
 with col1:
-    st.markdown(f"**{t['table1']}**")
-    st.caption(t["table1_caption"])
+    st.markdown(f"""
+    <div class="upload-card">
+        <div class="upload-title">{t['table1']}</div>
+        <div class="upload-hint">{t['drag_drop']}</div>
+        <div class="upload-format">{t['table1_caption']} | {t['supported_files']}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
     arquivo1 = st.file_uploader(
         t["upload_table1"],
         type=["xlsx", "xls", "csv"],
-        key="t1"
+        key="t1",
+        label_visibility="collapsed"
     )
 
 with col2:
-    st.markdown(f"**{t['table2']}**")
-    st.caption(t["table2_caption"])
+    st.markdown(f"""
+    <div class="upload-card">
+        <div class="upload-title">{t['table2']}</div>
+        <div class="upload-hint">{t['drag_drop']}</div>
+        <div class="upload-format">{t['table2_caption']} | {t['supported_files']}</div>
+    </div>
+    """, unsafe_allow_html=True)
+
     arquivo2 = st.file_uploader(
         t["upload_table2"],
         type=["xlsx", "xls", "csv"],
-        key="t2"
+        key="t2",
+        label_visibility="collapsed"
     )
 
 
-def ler_arquivo(arquivo):
+def primeira_linha_eh_comentario(arquivo):
+    """
+    Detects whether the first row of Table 2 is a comment/note row.
+    If the file is already clean and starts with the real headers, it will not skip anything.
+    """
+    try:
+        if arquivo.name.lower().endswith(".csv"):
+            preview = pd.read_csv(arquivo, dtype=str, header=None, nrows=1)
+            arquivo.seek(0)
+        else:
+            preview = pd.read_excel(arquivo, dtype=str, header=None, nrows=1)
+            arquivo.seek(0)
+
+        if preview.empty:
+            return False
+
+        first_row_text = " ".join(
+            preview.iloc[0].fillna("").astype(str).tolist()
+        ).lower()
+
+        comment_keywords = [
+            "note:",
+            "note：",
+            "the red background",
+            "unverified material",
+            "red background color",
+            "备注",
+            "说明"
+        ]
+
+        header_keywords = [
+            "bit number",
+            "child material code",
+            "ref",
+            "part number",
+            "料号",
+            "位号"
+        ]
+
+        # If it clearly contains real headers, do not skip.
+        if any(keyword in first_row_text for keyword in header_keywords):
+            return False
+
+        # If it contains comment/note text, skip first row.
+        if any(keyword in first_row_text for keyword in comment_keywords):
+            return True
+
+        return False
+
+    except Exception:
+        try:
+            arquivo.seek(0)
+        except Exception:
+            pass
+        return False
+
+
+def ler_arquivo(arquivo, skip_first_row=False):
+    skiprows = 1 if skip_first_row else 0
+
     if arquivo.name.lower().endswith(".csv"):
-        return pd.read_csv(arquivo, dtype=str)
-    return pd.read_excel(arquivo, dtype=str)
+        df = pd.read_csv(arquivo, dtype=str, skiprows=skiprows)
+        arquivo.seek(0)
+        return df
+
+    df = pd.read_excel(arquivo, dtype=str, skiprows=skiprows)
+    arquivo.seek(0)
+    return df
 
 
 def limpar_nome_coluna(c):
@@ -687,12 +950,14 @@ def encontrar_coluna_padrao(colunas, tipo):
 
     if tipo == "ref":
         candidatos = [
+            "bit number",
             "ref", "ref.", "reference", "reference designator",
             "designator", "ref des", "refdes", "location",
             "位号", "位置", "器件位号"
         ]
     else:
         candidatos = [
+            "child material code",
             "part number", "part numbe", "partnumber", "part no",
             "part no.", "pn", "p/n", "material", "material number",
             "item number", "料号", "物料号", "物料编码", "物料代码"
@@ -1036,7 +1301,20 @@ def gerar_excel(resultado, tabela1_normalizada, tabela2_normalizada, dup_tabela1
 if arquivo1 and arquivo2:
     try:
         df1 = normalizar_colunas(ler_arquivo(arquivo1))
-        df2 = normalizar_colunas(ler_arquivo(arquivo2))
+
+        skip_first_row_t2 = primeira_linha_eh_comentario(arquivo2)
+        df2 = normalizar_colunas(ler_arquivo(arquivo2, skip_first_row=skip_first_row_t2))
+
+        file_signature = (
+            getattr(arquivo1, "name", ""),
+            getattr(arquivo1, "size", None),
+            getattr(arquivo2, "name", ""),
+            getattr(arquivo2, "size", None)
+        )
+
+        if st.session_state.get("file_signature") != file_signature:
+            st.session_state["file_signature"] = file_signature
+            st.session_state["comparison_done"] = False
 
         st.subheader(t["select_columns"])
 
@@ -1082,7 +1360,9 @@ if arquivo1 and arquivo2:
 
         st.divider()
 
-        if st.button(t["compare"], type="primary", use_container_width=True):
+        compare_clicked = st.button(t["compare"], type="primary", use_container_width=True)
+
+        if compare_clicked:
             tabela1 = preparar_tabela1(df1, col_ref_t1, col_pn_t1)
             tabela2 = preparar_tabela2(df2, col_ref_t2, col_pn_t2)
 
@@ -1091,6 +1371,22 @@ if arquivo1 and arquivo2:
 
             resultado = comparar(tabela1, tabela2)
             issues_df = criar_issue_center(resultado, dup_tabela1, dup_tabela2)
+
+            st.session_state["comparison_done"] = True
+            st.session_state["tabela1_result"] = tabela1
+            st.session_state["tabela2_result"] = tabela2
+            st.session_state["dup_tabela1_result"] = dup_tabela1
+            st.session_state["dup_tabela2_result"] = dup_tabela2
+            st.session_state["resultado_result"] = resultado
+            st.session_state["issues_result"] = issues_df
+
+        if st.session_state.get("comparison_done", False):
+            tabela1 = st.session_state["tabela1_result"]
+            tabela2 = st.session_state["tabela2_result"]
+            dup_tabela1 = st.session_state["dup_tabela1_result"]
+            dup_tabela2 = st.session_state["dup_tabela2_result"]
+            resultado = st.session_state["resultado_result"]
+            issues_df = st.session_state["issues_result"]
 
             st.subheader(t["summary"])
 
@@ -1186,17 +1482,118 @@ if arquivo1 and arquivo2:
             else:
                 st.warning(t["result_missing_extra"])
 
+            # ============================================================
+            # Issue Center Filters
+            # ============================================================
+            issues_filtradas = issues_df.copy()
+
             if total_issues_count > 0:
+                st.subheader(t["issue_filters"])
+                issue_col1, issue_col2 = st.columns([2, 5])
+
+                issue_filter_options = [
+                    t["all_issues"],
+                    TABLE_TEXT[st.session_state.lang]["critical"],
+                    TABLE_TEXT[st.session_state.lang]["high"],
+                    TABLE_TEXT[st.session_state.lang]["medium"]
+                ]
+
+                with issue_col1:
+                    issue_filter_label = st.selectbox(
+                        t["issue_filter"],
+                        issue_filter_options,
+                        key="issue_filter"
+                    )
+
+                with issue_col2:
+                    st.caption(t["issue_filter_note"])
+
+                if issue_filter_label != t["all_issues"] and not issues_filtradas.empty:
+                    severity_key = None
+                    for key in ["critical", "high", "medium"]:
+                        if issue_filter_label == TABLE_TEXT[st.session_state.lang][key]:
+                            severity_key = key
+
+                    if severity_key:
+                        internal_severities = [k for k, v in SEVERITY_MAP.items() if v == severity_key]
+                        issues_filtradas = issues_filtradas[issues_filtradas["Severity"].isin(internal_severities)]
+
                 st.subheader(t["issue_center"])
-                st.dataframe(traduzir_issues_df(issues_df, st.session_state.lang), use_container_width=True)
+
+                if issues_filtradas.empty:
+                    st.info(t["no_result"])
+                else:
+                    st.dataframe(traduzir_issues_df(issues_filtradas, st.session_state.lang), use_container_width=True)
+
+            # ============================================================
+            # Comparison Filters
+            # ============================================================
+            st.subheader(t["comparison_filters"])
+
+            comp_col1, comp_col2, comp_col3 = st.columns([2, 3, 3])
+
+            result_filter_options = [
+                t["all"],
+                TABLE_TEXT[st.session_state.lang]["match"],
+                TABLE_TEXT[st.session_state.lang]["mismatch"],
+                TABLE_TEXT[st.session_state.lang]["missing"],
+                TABLE_TEXT[st.session_state.lang]["extra"]
+            ]
+
+            with comp_col1:
+                result_filter_label = st.selectbox(
+                    t["result_filter"],
+                    result_filter_options,
+                    key="result_filter"
+                )
+
+            with comp_col2:
+                search_text = st.text_input(
+                    t["search"],
+                    key="search_text"
+                )
+
+            with comp_col3:
+                st.caption(t["comparison_filter_note"])
+
+            resultado_filtrado = resultado.copy()
+
+            if result_filter_label != t["all"]:
+                status_key = None
+                for key in ["match", "mismatch", "missing", "extra"]:
+                    if result_filter_label == TABLE_TEXT[st.session_state.lang][key]:
+                        status_key = key
+
+                if status_key:
+                    internal_statuses = [k for k, v in STATUS_MAP.items() if v == status_key]
+                    resultado_filtrado = resultado_filtrado[resultado_filtrado["Status"].isin(internal_statuses)]
+
+            resultado_filtrado = aplicar_busca_resultado(resultado_filtrado, search_text)
 
             if duplicate_count > 0:
                 st.subheader(t["duplicate_check"])
                 duplicate_all = pd.concat([dup_tabela1, dup_tabela2], ignore_index=True)
-                st.dataframe(traduzir_duplicate_df(duplicate_all, st.session_state.lang), use_container_width=True)
+
+                if search_text:
+                    termo = str(search_text).strip().lower()
+                    duplicate_all = duplicate_all[
+                        duplicate_all.astype(str).apply(
+                            lambda row: row.str.lower().str.contains(termo, na=False).any(),
+                            axis=1
+                        )
+                    ]
+
+                if duplicate_all.empty:
+                    st.info(t["no_result"])
+                else:
+                    st.dataframe(traduzir_duplicate_df(duplicate_all, st.session_state.lang), use_container_width=True)
 
             st.subheader(t["comparison_result"])
-            st.dataframe(traduzir_resultado_df(resultado, st.session_state.lang), use_container_width=True)
+
+            if resultado_filtrado.empty:
+                st.info(t["no_result"])
+            else:
+                st.dataframe(traduzir_resultado_df(resultado_filtrado, st.session_state.lang), use_container_width=True)
 
             excel = gerar_excel(resultado, tabela1, tabela2, dup_tabela1, dup_tabela2, issues_df, st.session_state.lang)
             st.download_button(
@@ -1211,9 +1608,30 @@ if arquivo1 and arquivo2:
 else:
     st.warning(t["upload_warning"])
 
-st.markdown(f"""
-<hr style="margin-top: 28px; margin-bottom: 10px; border: 0; border-top: 1px solid #334155;">
-<div style="text-align: center; color: #94a3b8; font-size: 12px;">
-    {t["footer"]}
+st.markdown(f"""<hr style="margin-top:28px;margin-bottom:10px;border:0;border-top:1px solid #334155;">
+<div style="display:flex;align-items:center;justify-content:space-between;color:#94a3b8;font-size:12px;">
+<div style="width:25%;"></div>
+<div style="width:50%;text-align:center;line-height:1.7;">{t["footer"]}</div>
+<div style="width:25%;text-align:left;padding-left:28px;border-left:1px solid #334155;line-height:1.8;color:#38bdf8;font-size:14px;font-weight:700;">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+<path d="M3 21h18"/>
+<path d="M5 21V7l8-4v18"/>
+<path d="M19 21V11l-6-3"/>
+<path d="M9 9h1"/>
+<path d="M9 13h1"/>
+<path d="M9 17h1"/>
+<path d="M14 13h1"/>
+<path d="M14 17h1"/>
+</svg>
+<span>Jovi Quality Department</span>
 </div>
-""", unsafe_allow_html=True)
+<div style="display:flex;align-items:center;gap:8px;">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+<circle cx="12" cy="7" r="4"/>
+</svg>
+<span>Manager: 曾毅</span>
+</div>
+</div>
+</div>""", unsafe_allow_html=True)
