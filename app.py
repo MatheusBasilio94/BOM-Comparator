@@ -1787,4 +1787,146 @@ if arquivo1 and arquivo2:
                     st.subheader(t["issue_filters"])
                     issue_col1, issue_col2 = st.columns([2, 5])
 
-                    issue_filter_option
+                    issue_filter_options = [
+                        t["all_issues"],
+                        TABLE_TEXT[st.session_state.lang]["critical"],
+                        TABLE_TEXT[st.session_state.lang]["high"],
+                        TABLE_TEXT[st.session_state.lang]["medium"]
+                    ]
+
+                    with issue_col1:
+                        issue_filter_label = st.selectbox(
+                            t["issue_filter"],
+                            issue_filter_options,
+                            key="issue_filter"
+                        )
+
+                    with issue_col2:
+                        st.caption(t["issue_filter_note"])
+
+                    if issue_filter_label != t["all_issues"] and not issues_filtradas.empty:
+                        severity_key = None
+                        for key in ["critical", "high", "medium"]:
+                            if issue_filter_label == TABLE_TEXT[st.session_state.lang][key]:
+                                severity_key = key
+
+                        if severity_key:
+                            internal_severities = [k for k, v in SEVERITY_MAP.items() if v == severity_key]
+                            issues_filtradas = issues_filtradas[issues_filtradas["Severity"].isin(internal_severities)]
+
+                    st.subheader(t["issue_center"])
+
+                    if issues_filtradas.empty:
+                        st.info(t["no_result"])
+                    else:
+                        issues_display = traduzir_issues_df(issues_filtradas, st.session_state.lang)
+                        st.dataframe(estilizar_issues_df(issues_display, st.session_state.lang), use_container_width=True)
+                else:
+                    st.success(t["result_ok"])
+                st.markdown("</div>", unsafe_allow_html=True)
+
+            with tab_result:
+                st.markdown('<div class="tab-panel-card">', unsafe_allow_html=True)
+                st.subheader("📈 " + t["comparison_result"].replace("④ ", ""))
+
+                comp_col1, comp_col2, comp_col3 = st.columns([2, 3, 3])
+
+                result_filter_options = [
+                    t["all"],
+                    TABLE_TEXT[st.session_state.lang]["match"],
+                    TABLE_TEXT[st.session_state.lang]["mismatch"],
+                    TABLE_TEXT[st.session_state.lang]["missing"],
+                    TABLE_TEXT[st.session_state.lang]["extra"]
+                ]
+
+                with comp_col1:
+                    result_filter_label = st.selectbox(
+                        t["result_filter"],
+                        result_filter_options,
+                        key="result_filter"
+                    )
+
+                with comp_col2:
+                    search_text = st.text_input(
+                        t["search"],
+                        key="search_text"
+                    )
+
+                with comp_col3:
+                    st.caption(t["comparison_filter_note"])
+
+                resultado_filtrado = resultado.copy()
+
+                if result_filter_label != t["all"]:
+                    status_key = None
+                    for key in ["match", "mismatch", "missing", "extra"]:
+                        if result_filter_label == TABLE_TEXT[st.session_state.lang][key]:
+                            status_key = key
+
+                    if status_key:
+                        internal_statuses = [k for k, v in STATUS_MAP.items() if v == status_key]
+                        resultado_filtrado = resultado_filtrado[resultado_filtrado["Status"].isin(internal_statuses)]
+
+                resultado_filtrado = aplicar_busca_resultado(resultado_filtrado, search_text)
+
+                if resultado_filtrado.empty:
+                    st.info(t["no_result"])
+                else:
+                    st.dataframe(traduzir_resultado_df(resultado_filtrado, st.session_state.lang), use_container_width=True)
+                st.markdown("</div>", unsafe_allow_html=True)
+
+            with tab_report:
+                st.markdown('<div class="tab-panel-card">', unsafe_allow_html=True)
+                st.subheader("📄 Relatório")
+                st.markdown(f"""
+                <div class="report-card">
+                    <b>BOM Comparator Tool</b><br>
+                    {t["total_items"]}: {total_count}<br>
+                    {t["match_rate"]}: {match_rate:.2f}%<br>
+                    {t["total_issues"]}: {total_issues_count}<br><br>
+                    O relatório em Excel contém resumo, problemas, duplicidades, resultados completos e tabelas normalizadas.
+                </div>
+                """, unsafe_allow_html=True)
+
+                excel = gerar_excel(resultado, tabela1, tabela2, dup_tabela1, dup_tabela2, issues_df, st.session_state.lang)
+                st.download_button(
+                    label=t["download_excel"],
+                    data=excel,
+                    file_name="bom_comparison_result.xlsx",
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    use_container_width=True
+                )
+                st.markdown("</div>", unsafe_allow_html=True)
+
+    except Exception as e:
+        st.error(f"{t['processing_error']}: {e}")
+else:
+    st.warning(t["upload_warning"])
+
+st.markdown(f"""<hr style="margin-top:28px;margin-bottom:10px;border:0;border-top:1px solid #334155;">
+<div style="display:flex;align-items:center;justify-content:space-between;color:#94a3b8;font-size:12px;">
+<div style="width:25%;"></div>
+<div style="width:50%;text-align:center;line-height:1.7;">{t["footer"]}</div>
+<div style="width:25%;text-align:left;padding-left:28px;border-left:1px solid #334155;line-height:1.8;color:#38bdf8;font-size:14px;font-weight:700;">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+<path d="M3 21h18"/>
+<path d="M5 21V7l8-4v18"/>
+<path d="M19 21V11l-6-3"/>
+<path d="M9 9h1"/>
+<path d="M9 13h1"/>
+<path d="M9 17h1"/>
+<path d="M14 13h1"/>
+<path d="M14 17h1"/>
+</svg>
+<span>Jovi Quality Department</span>
+</div>
+<div style="display:flex;align-items:center;gap:8px;">
+<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+<circle cx="12" cy="7" r="4"/>
+</svg>
+<span>Manager: 曾毅</span>
+</div>
+</div>
+</div>""", unsafe_allow_html=True)
