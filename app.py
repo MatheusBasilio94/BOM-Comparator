@@ -71,6 +71,51 @@ div[data-testid="stHorizontalBlock"] button:hover {
     box-shadow: 0 0 14px rgba(56, 189, 248, 0.35);
     transform: translateY(-1px);
 }
+
+/* Functional Tabs Layout - v1.6.2 */
+div[data-testid="stTabs"] [data-baseweb="tab-list"] {
+    gap: 0px;
+    background: rgba(15, 23, 42, 0.82);
+    border: 1px solid #1f2937;
+    border-radius: 12px 12px 0 0;
+    overflow: hidden;
+}
+div[data-testid="stTabs"] [data-baseweb="tab"] {
+    height: 56px;
+    padding: 0 22px;
+    color: #d1d5db;
+    font-weight: 800;
+    border-right: 1px solid #1f2937;
+    background: rgba(15, 23, 42, 0.74);
+}
+div[data-testid="stTabs"] [aria-selected="true"] {
+    color: #38bdf8 !important;
+    background: rgba(14,165,233,0.10) !important;
+    border-bottom: 3px solid #38bdf8 !important;
+}
+.tab-panel-card {
+    border: 1px solid #1f2937;
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    padding: 18px;
+    background: rgba(2, 6, 23, 0.30);
+    margin-bottom: 22px;
+}
+.select-card {
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    padding: 18px 18px 8px 18px;
+    background: rgba(15, 23, 42, 0.45);
+    margin: 18px 0 10px 0;
+}
+.report-card {
+    padding: 18px;
+    border: 1px solid #334155;
+    border-radius: 12px;
+    background: rgba(15,23,42,0.60);
+    color: #dbeafe;
+}
+
 </style>
 <div class="language-title">🌐 Idioma / Language / 语言</div>
 """, unsafe_allow_html=True)
@@ -158,7 +203,7 @@ TEXT = {
         "app_title": "BOM Comparator Tool",
         "app_subtitle": "Compare arquivos BOM por Ref. e Part Number, incluindo PN divergente, itens faltantes, itens extras e duplicidades.",
         "area": "Quality Specialist",
-        "version": "Versão 1.5.16",
+        "version": "Versão 1.6.5",
         "tool_type": "Developed by Matheus Augusto de Lima Basilio",
         "how_to_use": "Como usar",
         "step1": "1. Carregue a Tabela 1 e a Tabela 2",
@@ -202,7 +247,7 @@ TEXT = {
         "download_excel": "📥 Baixar Relatório Excel",
         "processing_error": "Erro ao processar os arquivos",
         "upload_warning": "Carregue os dois arquivos para iniciar a comparação.",
-        "footer": "BOM Comparator Tool | Version 1.5.16<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
+        "footer": "BOM Comparator Tool | Version 1.6.5<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
         "filters": "Filtros e Busca",
         "result_filter": "Filtrar resultado",
         "issue_filter": "Filtrar problemas por severidade",
@@ -222,7 +267,7 @@ TEXT = {
         "app_title": "BOM Comparator Tool",
         "app_subtitle": "Compare BOM files by Ref. and Part Number, including PN mismatch, missing items, extra items and duplicates.",
         "area": "Quality Specialist",
-        "version": "Version 1.5.16",
+        "version": "Version 1.6.5",
         "tool_type": "Developed by Matheus Augusto de Lima Basilio",
         "how_to_use": "How to Use",
         "step1": "1. Upload Table 1 and Table 2",
@@ -266,7 +311,7 @@ TEXT = {
         "download_excel": "📥 Download Excel Report",
         "processing_error": "Error processing files",
         "upload_warning": "Please upload both files to start the comparison.",
-        "footer": "BOM Comparator Tool | Version 1.5.16<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
+        "footer": "BOM Comparator Tool | Version 1.6.5<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
         "filters": "Filters and Search",
         "result_filter": "Filter result",
         "issue_filter": "Filter issues by severity",
@@ -286,7 +331,7 @@ TEXT = {
         "app_title": "BOM Comparator Tool",
         "app_subtitle": "通过位号和料号对比BOM文件，包括料号不一致、缺失项目、多余项目和重复位号。",
         "area": "Quality Specialist",
-        "version": "版本 1.5.16",
+        "version": "版本 1.6.5",
         "tool_type": "Developed by Matheus Augusto de Lima Basilio",
         "how_to_use": "使用说明",
         "step1": "1. 上传表格1和表格2",
@@ -330,7 +375,7 @@ TEXT = {
         "download_excel": "📥 下载Excel报告",
         "processing_error": "处理文件时发生错误",
         "upload_warning": "请上传两个文件以开始比较。",
-        "footer": "BOM Comparator Tool | Version 1.5.16<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
+        "footer": "BOM Comparator Tool | Version 1.6.5<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
         "filters": "筛选和搜索",
         "result_filter": "筛选结果",
         "issue_filter": "按严重等级筛选问题",
@@ -474,6 +519,30 @@ def traduzir_status(valor, lang):
     return TABLE_TEXT[lang].get(chave, valor) if chave else valor
 
 
+def adicionar_icone_status(valor):
+    texto = str(valor)
+
+    status_lower = texto.lower()
+
+    # Important: check mismatch/divergent before Match, because "mismatch" contains "match".
+    if "pn mismatch" in status_lower or "pn divergente" in status_lower or "divergente" in status_lower or "料号不一致" in texto:
+        return f"⚠️ {texto}"
+
+    if "missing" in status_lower or "faltando" in status_lower or "缺少" in texto:
+        return f"❌ {texto}"
+
+    if "extra" in status_lower or "多余" in texto:
+        return f"❌ {texto}"
+
+    if "duplicate" in status_lower or "duplicada" in status_lower or "重复" in texto:
+        return f"🔄 {texto}"
+
+    if "match" in status_lower or "匹配" in texto:
+        return f"✅ {texto}"
+
+    return texto
+
+
 def traduzir_issue_type(valor, lang):
     chave = ISSUE_TYPE_MAP.get(str(valor))
     return TABLE_TEXT[lang].get(chave, valor) if chave else valor
@@ -524,7 +593,7 @@ def traduzir_resultado_df(df, lang):
     labels = TABLE_TEXT[lang]
 
     if "Status" in out.columns:
-        out["Status"] = out["Status"].apply(lambda x: traduzir_status(x, lang))
+        out["Status"] = out["Status"].apply(lambda x: adicionar_icone_status(traduzir_status(x, lang)))
 
     out = out.rename(columns={
         "位号 (Ref.)": labels["ref"],
@@ -617,6 +686,98 @@ def traduzir_normalizada_df(df, lang):
         "位号 (Ref.)": TABLE_TEXT[lang]["ref"],
         "料号 (Part Number)": TABLE_TEXT[lang]["pn"]
     })
+
+def estilizar_issues_df(df, lang):
+    """
+    Highlights the Severity column in the Issue Center.
+    Works after translating the displayed dataframe.
+    """
+    labels = TABLE_TEXT[lang]
+    severity_col = labels["severity"]
+
+    def style_severity(value):
+        value_text = str(value).strip().lower()
+
+        critical_values = [
+            labels.get("critical", "").lower(),
+            "critical",
+            "crítica",
+            "critica",
+            "严重"
+        ]
+
+        high_values = [
+            labels.get("high", "").lower(),
+            "high",
+            "alta",
+            "高"
+        ]
+
+        medium_values = [
+            labels.get("medium", "").lower(),
+            "medium",
+            "média",
+            "media",
+            "中"
+        ]
+
+        if value_text in critical_values:
+            return (
+                "background-color: #7f1d1d; "
+                "color: #ffffff; "
+                "font-weight: 800; "
+                "border-radius: 6px; "
+                "text-align: center;"
+            )
+
+        if value_text in high_values:
+            return (
+                "background-color: #dc2626; "
+                "color: #ffffff; "
+                "font-weight: 800; "
+                "border-radius: 6px; "
+                "text-align: center;"
+            )
+
+        if value_text in medium_values:
+            return (
+                "background-color: #f59e0b; "
+                "color: #111827; "
+                "font-weight: 800; "
+                "border-radius: 6px; "
+                "text-align: center;"
+            )
+
+        return ""
+
+    if severity_col not in df.columns:
+        return df
+
+    return df.style.map(style_severity, subset=[severity_col])
+
+
+
+
+def contar_status_dashboard(resultado, issues_df, dup_tabela1, dup_tabela2):
+    if resultado is None or resultado.empty:
+        return {
+            "t1": 0,
+            "t2": 0,
+            "issues": 0,
+            "match_rate": "0.00%"
+        }
+
+    total_count = len(resultado)
+    match_count = (resultado["Status"] == "匹配 (Match)").sum()
+    total_issues = len(issues_df) if issues_df is not None else 0
+    match_rate = (match_count / total_count * 100) if total_count > 0 else 0
+
+    return {
+        "t1": total_count,
+        "t2": total_count,
+        "issues": total_issues,
+        "match_rate": f"{match_rate:.2f}%"
+    }
 
 
 def aplicar_busca_resultado(df, termo):
@@ -718,6 +879,123 @@ div[data-testid="stFileUploader"] section {
 div[data-testid="stFileUploader"] label {
     display: none !important;
 }
+
+/* ============================================================
+   Executive Dashboard Layout - v1.6.0
+   ============================================================ */
+
+.exec-header {
+    display: grid;
+    grid-template-columns: 0.42fr 1.35fr 0.55fr 0.9fr;
+    gap: 18px;
+    align-items: center;
+    padding: 12px 0 14px 0;
+    border-bottom: 1px solid #1f2937;
+    margin-bottom: 16px;
+}
+
+.exec-jovi-logo {
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 20px;
+    border-right: 1px solid #334155;
+}
+.exec-jovi-text {
+    font-size: 40px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    color: #ffffff;
+    line-height: 1;
+    text-shadow: 0 0 14px rgba(148, 163, 184, 0.25);
+}
+
+.exec-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.exec-logo {
+    width: 54px;
+    height: 54px;
+    border-radius: 10px;
+    border: 1px solid #38bdf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #38bdf8;
+    background: rgba(14, 165, 233, 0.08);
+}
+.exec-title {
+    font-size: 30px;
+    font-weight: 900;
+    color: #f8fafc;
+    line-height: 1.1;
+}
+.exec-version {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 3px 9px;
+    border: 1px solid #0ea5e9;
+    color: #38bdf8;
+    border-radius: 6px;
+    font-size: 13px;
+    vertical-align: middle;
+    background: rgba(14, 165, 233, 0.10);
+}
+.exec-subtitle {
+    color: #cbd5e1;
+    font-size: 15px;
+    margin-top: 6px;
+}
+.exec-dept {
+    color: #f8fafc;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.55;
+}
+.exec-dept span {
+    color: #cbd5e1;
+    font-weight: 500;
+}
+.filter-row {
+    display: grid;
+    grid-template-columns: 0.9fr 1.35fr 0.9fr;
+    gap: 20px;
+    align-items: end;
+    margin-bottom: 16px;
+}
+.export-note {
+    color: #94a3b8;
+    font-size: 13px;
+    text-align: right;
+}
+.compact-info {
+    padding: 12px 16px;
+    border: 1px solid #1f3b5d;
+    border-radius: 10px;
+    color: #93c5fd;
+    background: rgba(14,165,233,0.08);
+    margin: 12px 0;
+}
+
+/* Restore Compare primary button to orange */
+div[data-testid="stButton"] > button[kind="primary"] {
+    background: linear-gradient(90deg, #f59e0b, #f97316) !important;
+    color: #ffffff !important;
+    border: none !important;
+    font-weight: 800 !important;
+    box-shadow: 0 0 12px rgba(249, 115, 22, 0.30) !important;
+}
+
+div[data-testid="stButton"] > button[kind="primary"]:hover {
+    background: linear-gradient(90deg, #f97316, #ea580c) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 0 16px rgba(249, 115, 22, 0.45) !important;
+}
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -803,32 +1081,28 @@ with logout_col2:
 
 
 # ----------------------------
-# Header
+# Executive Header
 # ----------------------------
 st.markdown(f"""
-<div class="main-header">
-    <div>
-        <div class="main-title">{t["app_title"]}</div>
-        <div class="main-subtitle">{t["app_subtitle"]}</div>
+<div class="exec-header">
+    <div class="exec-jovi-logo">
+        <div class="exec-jovi-text">JOVI</div>
     </div>
+    <div class="exec-brand">
+        <div>
+            <div class="exec-title">{t["app_title"]}<span class="exec-version">v1.6.5</span></div>
+            <div class="exec-subtitle">{t["app_subtitle"]}</div>
+        </div>
+    </div>
+    <div></div>
+    <div></div>
+    <div></div>
 </div>
 """, unsafe_allow_html=True)
 
-st.markdown(f"""
-<div class="section-card">
-    <div class="section-title">{t["how_to_use"]}</div>
-    <div class="section-text">
-        {t["step1"]}<br>
-        {t["step2"]}<br>
-        {t["step3"]}<br>
-        {t["step4"]}
-    </div>
-    <br>
-    <div class="small-note">{t["note"]}</div>
-</div>
-""", unsafe_allow_html=True)
+st.markdown(f'<div class="compact-info">ℹ️ {t["note"]}</div>', unsafe_allow_html=True)
 
-st.subheader(t["upload_files"])
+st.subheader("☁️ " + t["upload_files"])
 
 col1, col2 = st.columns(2)
 
@@ -863,6 +1137,7 @@ with col2:
         key="t2",
         label_visibility="collapsed"
     )
+
 
 
 def primeira_linha_eh_comentario(arquivo):
@@ -1316,6 +1591,7 @@ if arquivo1 and arquivo2:
             st.session_state["file_signature"] = file_signature
             st.session_state["comparison_done"] = False
 
+        st.markdown('<div class="select-card">', unsafe_allow_html=True)
         st.subheader(t["select_columns"])
 
         c1, c2 = st.columns(2)
@@ -1351,6 +1627,7 @@ if arquivo1 and arquivo2:
             )
 
         st.caption(t["auto_col_note"])
+        st.markdown("</div>", unsafe_allow_html=True)
 
         with st.expander(t["preview_files"]):
             st.write(t["table1"])
@@ -1388,7 +1665,9 @@ if arquivo1 and arquivo2:
             resultado = st.session_state["resultado_result"]
             issues_df = st.session_state["issues_result"]
 
-            st.subheader(t["summary"])
+            # ============================================================
+            # Dashboard Summary + Functional Tabs
+            # ============================================================
 
             match_count = (resultado["Status"] == "匹配 (Match)").sum()
             missing_count = (resultado["Status"] == "存在于表格1，但不存在于表格2 (Only in Table 1)").sum()
@@ -1402,6 +1681,8 @@ if arquivo1 and arquivo2:
             )
             total_count = len(resultado)
             match_rate = (match_count / total_count * 100) if total_count > 0 else 0
+
+            st.subheader(t["summary"])
 
             st.markdown(f"""
             <style>
@@ -1482,156 +1763,28 @@ if arquivo1 and arquivo2:
             else:
                 st.warning(t["result_missing_extra"])
 
-            # ============================================================
-            # Issue Center Filters
-            # ============================================================
-            issues_filtradas = issues_df.copy()
+            tab_upload, tab_issues, tab_result, tab_report = st.tabs([
+                "☁️ Upload",
+                "⚠️ " + t["issue_center"],
+                "📈 " + t["comparison_result"].replace("④ ", ""),
+                "📄 Relatório"
+            ])
 
-            if total_issues_count > 0:
-                st.subheader(t["issue_filters"])
-                issue_col1, issue_col2 = st.columns([2, 5])
+            with tab_upload:
+                st.markdown('<div class="tab-panel-card">', unsafe_allow_html=True)
+                st.subheader("☁️ Upload / Preview")
+                st.write(t["table1"])
+                st.dataframe(df1.head(20), use_container_width=True)
+                st.write(t["table2"])
+                st.dataframe(df2.head(20), use_container_width=True)
+                st.markdown("</div>", unsafe_allow_html=True)
 
-                issue_filter_options = [
-                    t["all_issues"],
-                    TABLE_TEXT[st.session_state.lang]["critical"],
-                    TABLE_TEXT[st.session_state.lang]["high"],
-                    TABLE_TEXT[st.session_state.lang]["medium"]
-                ]
+            with tab_issues:
+                st.markdown('<div class="tab-panel-card">', unsafe_allow_html=True)
+                issues_filtradas = issues_df.copy()
 
-                with issue_col1:
-                    issue_filter_label = st.selectbox(
-                        t["issue_filter"],
-                        issue_filter_options,
-                        key="issue_filter"
-                    )
+                if total_issues_count > 0:
+                    st.subheader(t["issue_filters"])
+                    issue_col1, issue_col2 = st.columns([2, 5])
 
-                with issue_col2:
-                    st.caption(t["issue_filter_note"])
-
-                if issue_filter_label != t["all_issues"] and not issues_filtradas.empty:
-                    severity_key = None
-                    for key in ["critical", "high", "medium"]:
-                        if issue_filter_label == TABLE_TEXT[st.session_state.lang][key]:
-                            severity_key = key
-
-                    if severity_key:
-                        internal_severities = [k for k, v in SEVERITY_MAP.items() if v == severity_key]
-                        issues_filtradas = issues_filtradas[issues_filtradas["Severity"].isin(internal_severities)]
-
-                st.subheader(t["issue_center"])
-
-                if issues_filtradas.empty:
-                    st.info(t["no_result"])
-                else:
-                    st.dataframe(traduzir_issues_df(issues_filtradas, st.session_state.lang), use_container_width=True)
-
-            # ============================================================
-            # Comparison Filters
-            # ============================================================
-            st.subheader(t["comparison_filters"])
-
-            comp_col1, comp_col2, comp_col3 = st.columns([2, 3, 3])
-
-            result_filter_options = [
-                t["all"],
-                TABLE_TEXT[st.session_state.lang]["match"],
-                TABLE_TEXT[st.session_state.lang]["mismatch"],
-                TABLE_TEXT[st.session_state.lang]["missing"],
-                TABLE_TEXT[st.session_state.lang]["extra"]
-            ]
-
-            with comp_col1:
-                result_filter_label = st.selectbox(
-                    t["result_filter"],
-                    result_filter_options,
-                    key="result_filter"
-                )
-
-            with comp_col2:
-                search_text = st.text_input(
-                    t["search"],
-                    key="search_text"
-                )
-
-            with comp_col3:
-                st.caption(t["comparison_filter_note"])
-
-            resultado_filtrado = resultado.copy()
-
-            if result_filter_label != t["all"]:
-                status_key = None
-                for key in ["match", "mismatch", "missing", "extra"]:
-                    if result_filter_label == TABLE_TEXT[st.session_state.lang][key]:
-                        status_key = key
-
-                if status_key:
-                    internal_statuses = [k for k, v in STATUS_MAP.items() if v == status_key]
-                    resultado_filtrado = resultado_filtrado[resultado_filtrado["Status"].isin(internal_statuses)]
-
-            resultado_filtrado = aplicar_busca_resultado(resultado_filtrado, search_text)
-
-            if duplicate_count > 0:
-                st.subheader(t["duplicate_check"])
-                duplicate_all = pd.concat([dup_tabela1, dup_tabela2], ignore_index=True)
-
-                if search_text:
-                    termo = str(search_text).strip().lower()
-                    duplicate_all = duplicate_all[
-                        duplicate_all.astype(str).apply(
-                            lambda row: row.str.lower().str.contains(termo, na=False).any(),
-                            axis=1
-                        )
-                    ]
-
-                if duplicate_all.empty:
-                    st.info(t["no_result"])
-                else:
-                    st.dataframe(traduzir_duplicate_df(duplicate_all, st.session_state.lang), use_container_width=True)
-
-            st.subheader(t["comparison_result"])
-
-            if resultado_filtrado.empty:
-                st.info(t["no_result"])
-            else:
-                st.dataframe(traduzir_resultado_df(resultado_filtrado, st.session_state.lang), use_container_width=True)
-
-            excel = gerar_excel(resultado, tabela1, tabela2, dup_tabela1, dup_tabela2, issues_df, st.session_state.lang)
-            st.download_button(
-                label=t["download_excel"],
-                data=excel,
-                file_name="bom_comparison_result.xlsx",
-                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-            )
-
-    except Exception as e:
-        st.error(f"{t['processing_error']}: {e}")
-else:
-    st.warning(t["upload_warning"])
-
-st.markdown(f"""<hr style="margin-top:28px;margin-bottom:10px;border:0;border-top:1px solid #334155;">
-<div style="display:flex;align-items:center;justify-content:space-between;color:#94a3b8;font-size:12px;">
-<div style="width:25%;"></div>
-<div style="width:50%;text-align:center;line-height:1.7;">{t["footer"]}</div>
-<div style="width:25%;text-align:left;padding-left:28px;border-left:1px solid #334155;line-height:1.8;color:#38bdf8;font-size:14px;font-weight:700;">
-<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
-<path d="M3 21h18"/>
-<path d="M5 21V7l8-4v18"/>
-<path d="M19 21V11l-6-3"/>
-<path d="M9 9h1"/>
-<path d="M9 13h1"/>
-<path d="M9 17h1"/>
-<path d="M14 13h1"/>
-<path d="M14 17h1"/>
-</svg>
-<span>Jovi Quality Department</span>
-</div>
-<div style="display:flex;align-items:center;gap:8px;">
-<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
-<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-<circle cx="12" cy="7" r="4"/>
-</svg>
-<span>Manager: 曾毅</span>
-</div>
-</div>
-</div>""", unsafe_allow_html=True)
+                    issue_filter_option
