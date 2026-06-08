@@ -203,19 +203,19 @@ TEXT = {
         "app_title": "BOM Comparator Tool",
         "app_subtitle": "Compare arquivos BOM por Ref. e Part Number, incluindo PN divergente, itens faltantes, itens extras e duplicidades.",
         "area": "Quality Specialist",
-        "version": "Versão 1.6.5",
+        "version": "Versão 1.6.13",
         "tool_type": "Developed by Matheus Augusto de Lima Basilio",
         "how_to_use": "Como usar",
         "step1": "1. Carregue a Tabela 1 e a Tabela 2",
         "step2": "2. Verifique se as colunas selecionadas automaticamente estão corretas",
         "step3": "3. Clique em Comparar",
         "step4": "4. Revise os resultados e baixe o relatório em Excel",
-        "note": "Tabela 1: uma Ref. por linha | Tabela 2: múltiplas Ref. podem estar na mesma célula, separadas por vírgula",
+        "note": "Tabela 1 e Tabela 2: múltiplas Ref. podem estar na mesma célula, separadas por vírgula",
         "upload_files": "① Carregar arquivos",
         "table1": "Tabela 1",
         "table2": "Tabela 2",
-        "table1_caption": "Formato: uma Ref. por linha + Part Number",
-        "table2_caption": "Formato: múltiplas Ref. podem estar separadas por vírgula",
+        "table1_caption": "Formato: Ref. + Part Number (uma ou múltiplas Ref. por célula)",
+        "table2_caption": "Formato: Ref. + Part Number (uma ou múltiplas Ref. por célula)",
         "upload_table1": "Carregar Tabela 1",
         "upload_table2": "Carregar Tabela 2",
         "select_columns": "② Selecionar colunas",
@@ -247,7 +247,7 @@ TEXT = {
         "download_excel": "📥 Baixar Relatório Excel",
         "processing_error": "Erro ao processar os arquivos",
         "upload_warning": "Carregue os dois arquivos para iniciar a comparação.",
-        "footer": "BOM Comparator Tool | Version 1.6.5<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
+        "footer": "BOM Comparator Tool | Version 1.6.13<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
         "filters": "Filtros e Busca",
         "result_filter": "Filtrar resultado",
         "issue_filter": "Filtrar problemas por severidade",
@@ -260,26 +260,30 @@ TEXT = {
         "issue_filter_note": "ℹ️ Este filtro afeta apenas a Central de Problemas.",
         "comparison_filter_note": "ℹ️ Estes filtros afetam o Resultado da Comparação e a busca nas tabelas exibidas.",
         "drag_drop": "📁 Arraste o arquivo aqui ou clique para selecionar",
-        "supported_files": "Formatos aceitos: XLSX, XLS e CSV"
+        "supported_files": "Formatos aceitos: XLSX, XLS e CSV",
+        "pqc_check_title": "Itens para Conferência PQC",
+        "pqc_check_empty": "Nenhum item sem Ref./Bit Number encontrado na Tabela 1 ou Tabela 2.",
+        "pqc_check_warning": "item(ns) da Tabela 1/Tabela 2 estão sem Ref./Bit Number e precisam de confirmação PQC.",
+        "pqc_check_report_note": "O relatório em Excel também contém a aba PQC_Check com itens sem Ref./Bit Number para confirmação manual."
     },
     "en": {
         "language": "Language",
         "app_title": "BOM Comparator Tool",
         "app_subtitle": "Compare BOM files by Ref. and Part Number, including PN mismatch, missing items, extra items and duplicates.",
         "area": "Quality Specialist",
-        "version": "Version 1.6.5",
+        "version": "Version 1.6.13",
         "tool_type": "Developed by Matheus Augusto de Lima Basilio",
         "how_to_use": "How to Use",
         "step1": "1. Upload Table 1 and Table 2",
         "step2": "2. Check if the automatically selected columns are correct",
         "step3": "3. Click Compare",
         "step4": "4. Review the results and download the Excel report",
-        "note": "Table 1: one Ref. per row | Table 2: multiple Ref. may be in the same cell, separated by commas",
+        "note": "Table 1 and Table 2: multiple Ref. may be in the same cell, separated by commas",
         "upload_files": "① Upload Files",
         "table1": "Table 1",
         "table2": "Table 2",
-        "table1_caption": "Format: one Ref. per row + Part Number",
-        "table2_caption": "Format: multiple Ref. may be separated by commas",
+        "table1_caption": "Format: Ref. + Part Number (single or multiple Ref. per cell)",
+        "table2_caption": "Format: Ref. + Part Number (single or multiple Ref. per cell)",
         "upload_table1": "Upload Table 1",
         "upload_table2": "Upload Table 2",
         "select_columns": "② Select Columns",
@@ -311,7 +315,7 @@ TEXT = {
         "download_excel": "📥 Download Excel Report",
         "processing_error": "Error processing files",
         "upload_warning": "Please upload both files to start the comparison.",
-        "footer": "BOM Comparator Tool | Version 1.6.5<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
+        "footer": "BOM Comparator Tool | Version 1.6.13<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
         "filters": "Filters and Search",
         "result_filter": "Filter result",
         "issue_filter": "Filter issues by severity",
@@ -324,26 +328,30 @@ TEXT = {
         "issue_filter_note": "ℹ️ This filter affects only the Issue Center.",
         "comparison_filter_note": "ℹ️ These filters affect the Comparison Result and search across displayed tables.",
         "drag_drop": "📁 Drag and drop the file here or click to browse",
-        "supported_files": "Supported formats: XLSX, XLS and CSV"
+        "supported_files": "Supported formats: XLSX, XLS and CSV",
+        "pqc_check_title": "Items for PQC Confirmation",
+        "pqc_check_empty": "No items without Ref./Bit Number were found in Table 1 or Table 2.",
+        "pqc_check_warning": "item(s) from Table 1/Table 2 have no Ref./Bit Number and require PQC confirmation.",
+        "pqc_check_report_note": "The Excel report also contains the PQC_Check sheet with items without Ref./Bit Number for manual confirmation."
     },
     "cn": {
         "language": "语言",
         "app_title": "BOM Comparator Tool",
         "app_subtitle": "通过位号和料号对比BOM文件，包括料号不一致、缺失项目、多余项目和重复位号。",
         "area": "Quality Specialist",
-        "version": "版本 1.6.5",
+        "version": "版本 1.6.13",
         "tool_type": "Developed by Matheus Augusto de Lima Basilio",
         "how_to_use": "使用说明",
         "step1": "1. 上传表格1和表格2",
         "step2": "2. 检查系统自动选择的列是否正确",
         "step3": "3. 点击开始比较",
         "step4": "4. 查看结果并下载Excel报告",
-        "note": "表格1：每行一个位号 | 表格2：多个位号可在同一个单元格中，用逗号分隔",
+        "note": "表格1和表格2：多个位号可在同一个单元格中，用逗号分隔",
         "upload_files": "① 上传文件",
         "table1": "表格1",
         "table2": "表格2",
-        "table1_caption": "格式：每行一个位号 + 料号",
-        "table2_caption": "格式：多个位号可用逗号分隔",
+        "table1_caption": "格式：位号 + 料号（支持单个或多个位号）",
+        "table2_caption": "格式：位号 + 料号（支持单个或多个位号）",
         "upload_table1": "上传表格1",
         "upload_table2": "上传表格2",
         "select_columns": "② 选择列",
@@ -375,7 +383,7 @@ TEXT = {
         "download_excel": "📥 下载Excel报告",
         "processing_error": "处理文件时发生错误",
         "upload_warning": "请上传两个文件以开始比较。",
-        "footer": "BOM Comparator Tool | Version 1.6.5<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
+        "footer": "BOM Comparator Tool | Version 1.6.13<br><br>Developed by Matheus Augusto de Lima Basilio<br>Quality Specialist | Matheus.Augusto@jovimobile.com<br>© 2026 Matheus Augusto de Lima Basilio",
         "filters": "筛选和搜索",
         "result_filter": "筛选结果",
         "issue_filter": "按严重等级筛选问题",
@@ -388,7 +396,11 @@ TEXT = {
         "issue_filter_note": "ℹ️ 此筛选仅影响问题中心。",
         "comparison_filter_note": "ℹ️ 这些筛选影响比较结果，并可在显示的表格中搜索。",
         "drag_drop": "📁 将文件拖到这里或点击选择文件",
-        "supported_files": "支持格式：XLSX、XLS 和 CSV"
+        "supported_files": "支持格式：XLSX、XLS 和 CSV",
+        "pqc_check_title": "PQC确认项目",
+        "pqc_check_empty": "表格1或表格2中未发现无位号的项目。",
+        "pqc_check_warning": "个表格1/表格2项目没有位号，需要PQC确认。",
+        "pqc_check_report_note": "Excel报告还包含PQC_Check工作表，用于显示表格1/表格2中无位号且需要人工确认的项目。"
     }
 }
 
@@ -1090,7 +1102,7 @@ st.markdown(f"""
     </div>
     <div class="exec-brand">
         <div>
-            <div class="exec-title">{t["app_title"]}<span class="exec-version">v1.6.5</span></div>
+            <div class="exec-title">{t["app_title"]}<span class="exec-version">v1.6.13</span></div>
             <div class="exec-subtitle">{t["app_subtitle"]}</div>
         </div>
     </div>
@@ -1142,7 +1154,7 @@ with col2:
 
 def primeira_linha_eh_comentario(arquivo):
     """
-    Detects whether the first row of Table 2 is a comment/note row.
+    Detects whether the first row of an uploaded BOM file is a comment/note row.
     If the file is already clean and starts with the real headers, it will not skip anything.
     """
     try:
@@ -1295,6 +1307,12 @@ def limpar_tabela(saida):
 def preparar_tabela1(df, col_ref, col_pn):
     saida = df[[col_ref, col_pn]].copy()
     saida.columns = ["位号 (Ref.)", "料号 (Part Number)"]
+
+    # v1.6.13: Table 1 now also supports multiple Ref. values in the same cell,
+    # separated by commas, using the same normalization rule already applied to Table 2.
+    saida["位号 (Ref.)"] = saida["位号 (Ref.)"].astype(str).str.split(",")
+    saida = saida.explode("位号 (Ref.)")
+
     return limpar_tabela(saida)
 
 
@@ -1306,6 +1324,107 @@ def preparar_tabela2(df, col_ref, col_pn):
     saida = saida.explode("位号 (Ref.)")
 
     return limpar_tabela(saida)
+
+
+def encontrar_coluna_por_nome(colunas, nomes_alvo):
+    """
+    Finds a column by comparing normalized names.
+    Used for optional Table 2 fields required for PQC confirmation.
+    """
+    def normalizar_nome(txt):
+        return (
+            str(txt)
+            .lower()
+            .replace("\n", " ")
+            .replace("_", " ")
+            .replace("-", " ")
+            .strip()
+        )
+
+    colunas_lista = list(colunas)
+    alvos = [normalizar_nome(nome) for nome in nomes_alvo]
+
+    for coluna in colunas_lista:
+        coluna_norm = normalizar_nome(coluna)
+        if coluna_norm in alvos:
+            return coluna
+
+    for coluna in colunas_lista:
+        coluna_norm = normalizar_nome(coluna)
+        for alvo in alvos:
+            if alvo in coluna_norm or coluna_norm in alvo:
+                return coluna
+
+    return None
+
+
+def extrair_itens_para_conferencia(df, col_ref):
+    """
+    Extracts uploaded table items where Ref. / Bit Number is blank.
+    These items are not included in the automatic BOM comparison,
+    but must be confirmed by PQC during production.
+    """
+    output_columns = [
+        "Child material code",
+        "Child material English description",
+        "Confirmação PQC"
+    ]
+
+    if df is None or df.empty or col_ref not in df.columns:
+        return pd.DataFrame(columns=output_columns)
+
+    df_check = df.copy()
+    ref_raw = df_check[col_ref]
+    ref_text = ref_raw.astype(str).str.strip()
+
+    blank_mask = (
+        ref_raw.isna()
+        | ref_text.isin(["", " ", "nan", "NaN", "NAN", "None", "none", "NONE", "<NA>"])
+    )
+
+    itens = df_check[blank_mask].copy()
+
+    if itens.empty:
+        return pd.DataFrame(columns=output_columns)
+
+    code_col = encontrar_coluna_por_nome(
+        itens.columns,
+        [
+            "Child material code",
+            "child material code",
+            "料号",
+            "物料号",
+            "物料编码",
+            "material code",
+            "material number"
+        ]
+    )
+
+    desc_col = encontrar_coluna_por_nome(
+        itens.columns,
+        [
+            "Child material English description",
+            "child material english description",
+            "English description",
+            "material english description",
+            "description",
+            "物料英文描述",
+            "英文描述"
+        ]
+    )
+
+    output = pd.DataFrame(columns=output_columns)
+    output["Child material code"] = itens[code_col].astype(str).str.strip() if code_col else ""
+    output["Child material English description"] = itens[desc_col].astype(str).str.strip() if desc_col else ""
+    output["Confirmação PQC"] = ""
+
+    output = output.replace(["nan", "NaN", "NAN", "None", "none", "NONE", "<NA>"], "")
+    output = output.dropna(how="all", subset=[
+        "Child material code",
+        "Child material English description"
+    ])
+
+    return output.reset_index(drop=True)
 
 
 def detectar_ref_duplicada(df, nome_tabela):
@@ -1461,7 +1580,7 @@ def criar_issue_center(resultado, dup_tabela1, dup_tabela2):
     ])
 
 
-def gerar_excel(resultado, tabela1_normalizada, tabela2_normalizada, dup_tabela1, dup_tabela2, issues_df, lang):
+def gerar_excel(resultado, tabela1_normalizada, tabela2_normalizada, dup_tabela1, dup_tabela2, issues_df, itens_conferencia, lang):
     output = BytesIO()
 
     match_status = "匹配 (Match)"
@@ -1535,6 +1654,7 @@ def gerar_excel(resultado, tabela1_normalizada, tabela2_normalizada, dup_tabela1
     with pd.ExcelWriter(output, engine="openpyxl") as writer:
         summary_df.to_excel(writer, index=False, sheet_name="Summary")
         traduzir_issues_df(issues_df, lang).to_excel(writer, index=False, sheet_name="Issues")
+        itens_conferencia.to_excel(writer, index=False, sheet_name="PQC_Check")
         traduzir_resultado_df(match_df, lang).to_excel(writer, index=False, sheet_name="Match")
         traduzir_resultado_df(missing_df, lang).to_excel(writer, index=False, sheet_name="Missing")
         traduzir_resultado_df(extra_df, lang).to_excel(writer, index=False, sheet_name="Extra")
@@ -1575,7 +1695,8 @@ def gerar_excel(resultado, tabela1_normalizada, tabela2_normalizada, dup_tabela1
 
 if arquivo1 and arquivo2:
     try:
-        df1 = normalizar_colunas(ler_arquivo(arquivo1))
+        skip_first_row_t1 = primeira_linha_eh_comentario(arquivo1)
+        df1 = normalizar_colunas(ler_arquivo(arquivo1, skip_first_row=skip_first_row_t1))
 
         skip_first_row_t2 = primeira_linha_eh_comentario(arquivo2)
         df2 = normalizar_colunas(ler_arquivo(arquivo2, skip_first_row=skip_first_row_t2))
@@ -1643,6 +1764,15 @@ if arquivo1 and arquivo2:
             tabela1 = preparar_tabela1(df1, col_ref_t1, col_pn_t1)
             tabela2 = preparar_tabela2(df2, col_ref_t2, col_pn_t2)
 
+            # v1.6.13: PQC confirmation list now checks both uploaded tables.
+            # This is required because Table 1 and Table 2 can now be used with either BOM format.
+            itens_conferencia_t1 = extrair_itens_para_conferencia(df1, col_ref_t1)
+            itens_conferencia_t2 = extrair_itens_para_conferencia(df2, col_ref_t2)
+            itens_conferencia = pd.concat(
+                [itens_conferencia_t1, itens_conferencia_t2],
+                ignore_index=True
+            ).drop_duplicates().reset_index(drop=True)
+
             dup_tabela1 = detectar_ref_duplicada(tabela1, "Table 1")
             dup_tabela2 = detectar_ref_duplicada(tabela2, "Table 2")
 
@@ -1656,6 +1786,7 @@ if arquivo1 and arquivo2:
             st.session_state["dup_tabela2_result"] = dup_tabela2
             st.session_state["resultado_result"] = resultado
             st.session_state["issues_result"] = issues_df
+            st.session_state["itens_conferencia_result"] = itens_conferencia
 
         if st.session_state.get("comparison_done", False):
             tabela1 = st.session_state["tabela1_result"]
@@ -1664,6 +1795,14 @@ if arquivo1 and arquivo2:
             dup_tabela2 = st.session_state["dup_tabela2_result"]
             resultado = st.session_state["resultado_result"]
             issues_df = st.session_state["issues_result"]
+            itens_conferencia = st.session_state.get(
+                "itens_conferencia_result",
+                pd.DataFrame(columns=[
+                    "Child material code",
+                    "Child material English description",
+                    "Confirmação PQC"
+                ])
+            )
 
             # ============================================================
             # Dashboard Summary + Functional Tabs
@@ -1763,9 +1902,10 @@ if arquivo1 and arquivo2:
             else:
                 st.warning(t["result_missing_extra"])
 
-            tab_upload, tab_issues, tab_result, tab_report = st.tabs([
+            tab_upload, tab_issues, tab_pqc, tab_result, tab_report = st.tabs([
                 "☁️ Upload",
                 "⚠️ " + t["issue_center"],
+                "📌 " + t["pqc_check_title"],
                 "📈 " + t["comparison_result"].replace("④ ", ""),
                 "📄 Relatório"
             ])
@@ -1823,6 +1963,18 @@ if arquivo1 and arquivo2:
                         st.dataframe(estilizar_issues_df(issues_display, st.session_state.lang), use_container_width=True)
                 else:
                     st.success(t["result_ok"])
+                st.markdown("</div>", unsafe_allow_html=True)
+
+            with tab_pqc:
+                st.markdown('<div class="tab-panel-card">', unsafe_allow_html=True)
+                st.subheader("📌 " + t["pqc_check_title"])
+
+                if itens_conferencia.empty:
+                    st.success(t["pqc_check_empty"])
+                else:
+                    st.warning(f"{len(itens_conferencia)} {t['pqc_check_warning']}")
+                    st.dataframe(itens_conferencia, use_container_width=True)
+
                 st.markdown("</div>", unsafe_allow_html=True)
 
             with tab_result:
@@ -1884,11 +2036,12 @@ if arquivo1 and arquivo2:
                     {t["total_items"]}: {total_count}<br>
                     {t["match_rate"]}: {match_rate:.2f}%<br>
                     {t["total_issues"]}: {total_issues_count}<br><br>
-                    O relatório em Excel contém resumo, problemas, duplicidades, resultados completos e tabelas normalizadas.
+                    O relatório em Excel contém resumo, problemas, duplicidades, resultados completos, tabelas normalizadas e itens para conferência PQC.<br>
+                    {t["pqc_check_report_note"]}
                 </div>
                 """, unsafe_allow_html=True)
 
-                excel = gerar_excel(resultado, tabela1, tabela2, dup_tabela1, dup_tabela2, issues_df, st.session_state.lang)
+                excel = gerar_excel(resultado, tabela1, tabela2, dup_tabela1, dup_tabela2, issues_df, itens_conferencia, st.session_state.lang)
                 st.download_button(
                     label=t["download_excel"],
                     data=excel,
